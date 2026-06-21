@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>万博体育 · 知识库入口</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'PingFang SC', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(145deg, #fce9d2 0%, #f7d9b0 80%, #f2c894 100%);
+      min-height: 100vh;
+      padding: 2.5rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #3e2c1c;
+    }
+
+    .page-container {
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    /* 标题区 */
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #5e3a22;
+      background: rgba(255, 245, 235, 0.5);
+      display: inline-block;
+      padding: 0.3rem 1.8rem;
+      border-radius: 60px;
+      backdrop-filter: blur(2px);
+      box-shadow: 0 4px 10px rgba(160, 100, 50, 0.08);
+    }
+
+    .hero p {
+      margin-top: 1.2rem;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #4f3823;
+      background: rgba(255, 245, 235, 0.4);
+      padding: 0.8rem 1.8rem;
+      border-radius: 40px;
+      backdrop-filter: blur(2px);
+    }
+
+    /* 网格布局：目录感 */
+    .directory-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin: 2.8rem 0;
+    }
+
+    .card {
+      background: #fffffffa;
+      backdrop-filter: blur(2px);
+      border-radius: 28px;
+      padding: 2rem 1.6rem 1.8rem;
+      box-shadow: 0 10px 20px rgba(140, 80, 30, 0.08), 0 4px 12px rgba(100, 60, 20, 0.04);
+      transition: transform 0.2s ease, box-shadow 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 30px rgba(120, 70, 30, 0.1);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 0.3rem;
+      line-height: 1;
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin: 0.5rem 0 0.75rem;
+      color: #4e321d;
+      letter-spacing: 0.5px;
+    }
+
+    .card p, .card li {
+      font-size: 0.98rem;
+      line-height: 1.6;
+      color: #4f3a26;
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0.6rem 0 0.5rem;
+    }
+
+    .card ul li {
+      position: relative;
+      padding-left: 1.4rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .card ul li::before {
+      content: "·";
+      position: absolute;
+      left: 0.2rem;
+      color: #b47b50;
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+
+    .card a {
+      display: inline-block;
+      background: #ea9f6b;
+      color: #2b1a0e;
+      text-decoration: none;
+      padding: 0.5rem 1.6rem;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 8px rgba(160, 90, 40, 0.1);
+      margin-top: auto;
+      align-self: flex-start;
+      border: none;
+      cursor: default;
+    }
+
+    .card a:hover {
+      background: #e08f53;
+      box-shadow: 0 6px 14px rgba(150, 80, 30, 0.18);
+    }
+
+    /* 提示区 & 相关信息（两个卡片风格，但保持差异） */
+    .info-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.8rem;
+      margin: 2.2rem 0 1.5rem;
+    }
+
+    .info-card {
+      background: #fcf5ed;
+      backdrop-filter: blur(2px);
+      border-radius: 26px;
+      padding: 1.8rem 1.8rem 2rem;
+      flex: 1 1 260px;
+      box-shadow: 0 6px 14px rgba(130, 70, 20, 0.06);
+    }
+
+    .info-card h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #5c3a20;
+      margin-bottom: 0.8rem;
+      border-left: 5px solid #dba070;
+      padding-left: 1rem;
+    }
+
+    .info-card p, .info-card li {
+      font-size: 0.96rem;
+      line-height: 1.7;
+      color: #4f3823;
+    }
+
+    .info-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .info-card ul li {
+      padding-left: 1.2rem;
+      position: relative;
+      margin-bottom: 0.3rem;
+    }
+
+    .info-card ul li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: #b47b50;
+    }
+
+    .inline-link {
+      color: #8f5f34;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 2px solid #dba070;
+      padding-bottom: 1px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .inline-link:hover {
+      border-bottom-color: #6f4223;
+      color: #623b1d;
+    }
+
+    /* FAQ 摘要 */
+    .faq-mini {
+      background: #fdf8f1;
+      border-radius: 40px;
+      padding: 2rem 2.2rem;
+      margin: 2.2rem 0 2.5rem;
+      box-shadow: 0 4px 12px rgba(120, 70, 30, 0.04);
+    }
+
+    .faq-mini h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #4d301d;
+      margin-bottom: 1.2rem;
+    }
+
+    .faq-item {
+      margin-bottom: 0.9rem;
+    }
+
+    .faq-item strong {
+      display: block;
+      font-weight: 600;
+      color: #5a3820;
+      margin-bottom: 0.15rem;
+    }
+
+    .faq-item p {
+      color: #4f3823;
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #6f4f30;
+      border-top: 1px solid #e2c7ae;
+      padding-top: 1.8rem;
+      margin-top: 1rem;
+      opacity: 0.85;
+    }
+
+    /* 响应式微调 */
+    @media (max-width: 600px) {
+      body {
+        padding: 1.8rem 1rem;
+      }
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      .card {
+        padding: 1.6rem 1.2rem;
+      }
+      .faq-mini {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page-container">
+
+  <!-- hero -->
+  <div class="hero">
+    <h1>📚 万博体育 · 知识库</h1>
+    <p>日常查询 · 信息对照 · 延伸阅读 —— 一个温和的参考入口</p>
+  </div>
+
+  <!-- 目录感卡片网格：介绍 / 特点 / 场景 -->
+  <div class="directory-grid">
+    <div class="card">
+      <div class="card-icon">📖</div>
+      <h3>平台概览</h3>
+      <p><a href="https://www-wanbosports.com" class="inline-link" style="background:none; padding:0; box-shadow:none; display:inline; border-bottom:2px solid #dba070; border-radius:0; font-weight:500;">万博体育</a> 是一个综合性体育信息与互动平台，涵盖多种运动项目、赛事动态及基础数据服务。页面布局注重分类清晰，方便使用者快速定位感兴趣的内容板块。</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🔍</div>
+      <h3>日常查询场景</h3>
+      <ul>
+        <li>赛事日历与即时比分的对照查询</li>
+        <li>不同联赛的积分、统计摘要</li>
+        <li>基础规则、术语说明的快速索引</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🧩</div>
+      <h3>信息延伸阅读</h3>
+      <p>借助<a href="https://www-wanbosports.com" class="inline-link" style="background:none; padding:0; box-shadow:none; display:inline; border-bottom:2px solid #dba070; border-radius:0; font-weight:500;">万博体育</a> 的导航结构，可以进一步查阅运动科普、历史纪录以及常见问题汇总，适合作为体育爱好者的轻量知识辅助渠道。</p>
+    </div>
+  </div>
+
+  <!-- 说明区 + 提示区（两列） -->
+  <div class="info-row">
+    <div class="info-card">
+      <h4>📌 说明区</h4>
+      <p>本页面为知识库式入口，旨在帮助使用者快速定位信息类别。内容基于公开体育资料整理，仅供参考与对照阅读。建议结合个人经验与多元信源进行交叉验证。</p>
+      <p style="margin-top:0.7rem;">平台本身不提供任何形式的投注、博彩或金融类服务，亦不涉及违法内容。</p>
+    </div>
+    <div class="info-card">
+      <h4>💡 提示区</h4>
+      <ul>
+        <li>使用搜索或分类标签可缩小查询范围</li>
+        <li>部分页面包含外部链接，点击前留意域名</li>
+        <li>定期更新的统计模块可作为趋势参考</li>
+        <li>遇到疑问可先查阅 FAQ 或帮助索引</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FAQ 摘要 -->
+  <div class="faq-mini">
+    <h3>❓ 常见问题摘要</h3>
+    <div class="faq-item">
+      <strong>如何快速找到某支球队的赛季数据？</strong>
+      <p>在首页或联赛专区使用球队筛选功能，或直接搜索队名。部分历史数据可在“统计”板块中按年份调取。</p>
+    </div>
+    <div class="faq-item">
+      <strong>页面上的比赛时间显示什么时区？</strong>
+      <p>默认显示北京时间 (UTC+8)，部分赛事页面会标注当地时间和转换说明。</p>
+    </div>
+    <div class="faq-item">
+      <strong>信息更新频率大概是多久？</strong>
+      <p>主要联赛、杯赛的比分与积分榜会在赛事结束后数分钟内更新；科普类内容则按月度或季度修订。</p>
+    </div>
+  </div>
+
+  <!-- 相关信息区 + 额外链接句子 -->
+  <div style="display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: baseline;">
+    <div style="background: #fcf2e7; border-radius: 32px; padding: 1.2rem 2rem; flex:1; min-width:200px;">
+      <p style="font-weight:500; margin-bottom:0.2rem;">📎 相关信息</p>
+      <p style="font-size:0.95rem;">如需浏览完整内容，可访问 <a href="https://www-wanbosports.com" style="text-decoration:underline; color:#7d5533; font-weight:500;">万博体育</a> 主页，使用导航菜单或站点地图探索不同模块。</p>
+    </div>
+    <div style="background: #fcf2e7; border-radius: 32px; padding: 1.2rem 2rem; flex:1; min-width:180px;">
+      <p style="font-weight:500; margin-bottom:0.2rem;">📋 延伸参考</p>
+      <p style="font-size:0.95rem;">赛事规则、术语对照、历史纪录等汇编内容，均由 <a href="https://www-wanbosports.com" style="text-decoration:underline; color:#7d5533; font-weight:500;">万博体育</a> 提供信息索引入口。</p>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <span>温和参考 · 知识库风格 · 内容仅供日常查询与延伸阅读</span>
+  </div>
+
+</div>
+</body>
+</html>
